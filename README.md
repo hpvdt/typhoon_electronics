@@ -1,10 +1,10 @@
-# Hardware Project Template
+# Typhoon ELectronics
 
-General template repository for our hardware projects, especially one-off and self-contained projects like custom test equipment. This template assumes that the hardware is being designed in KiCad.
+The electronics system for Typhoon Streamliner
 
 ## Organization
 
-Pretty self-explanitory, put hardware related files into the `hardware` folder, firmware in the `firmware` folder. Other folders can be added as needed: for example a `media` folder is handy for storing pictures related to a project which can be used in documentation.
+There is a folder for each subsystem. Within each subsystem folder are `hardware` and `firmware` folders. Put hardware related files into the `hardware` folder, firmware in the `firmware` folder. Other folders can be added as needed: for example a `media` folder is handy for storing pictures related to a project which can be used in documentation.
 
 ## Conventions
 
