@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP AH1912-W-7
+D ULTRA-LOW POWER DIGITAL OMNIPOLAR HALL-EFFECT SWITCH.
+K
+F https://www.diodes.com//assets/Datasheets/AH1912.pdf
+$ENDCMP
+#
+#End Doc Library
