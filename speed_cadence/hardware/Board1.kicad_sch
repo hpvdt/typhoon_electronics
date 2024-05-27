@@ -4526,7 +4526,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3b60ff20-d7fb-40a0-be00-23c2cd9b3da9")
-		(property "Reference" "C?"
+		(property "Reference" "C2"
 			(at 76.2 124.8409 0)
 			(effects
 				(font
@@ -4544,7 +4544,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
 			(at 73.3552 130.81 0)
 			(effects
 				(font
@@ -4580,7 +4580,7 @@
 		(instances
 			(project "Board1"
 				(path "/10163266-8018-4064-a980-f3c4e9dfe9d4"
-					(reference "C?")
+					(reference "C2")
 					(unit 1)
 				)
 			)
@@ -5614,7 +5614,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c6d6905d-816c-4dad-b922-86fb45c1361c")
-		(property "Reference" "C?"
+		(property "Reference" "C1"
 			(at 58.42 117.2209 0)
 			(effects
 				(font
@@ -5632,7 +5632,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
 			(at 55.5752 123.19 0)
 			(effects
 				(font
@@ -5668,7 +5668,7 @@
 		(instances
 			(project "Board1"
 				(path "/10163266-8018-4064-a980-f3c4e9dfe9d4"
-					(reference "C?")
+					(reference "C1")
 					(unit 1)
 				)
 			)
