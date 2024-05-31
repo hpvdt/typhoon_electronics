@@ -181,23 +181,25 @@
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "J"
-				(at 20.32 10.16 0)
+			(property "Reference" "J1"
+				(at 34.29 -12.6999 0)
 				(effects
 					(font
 						(size 1.524 1.524)
 					)
+					(justify left)
 				)
 			)
 			(property "Value" "DX07S016JA3R1500"
-				(at 20.32 7.62 0)
+				(at 34.29 -15.2399 0)
 				(effects
 					(font
 						(size 1.524 1.524)
 					)
+					(justify left)
 				)
 			)
-			(property "Footprint" "CONN12_DX07S_JAE"
+			(property "Footprint" "DX07S016JA3R1500_USBC:CONN12_DX07S_JAE"
 				(at 0 0 0)
 				(effects
 					(font
@@ -355,7 +357,7 @@
 						)
 					)
 				)
-				(pin power_out line
+				(pin passive line
 					(at 0 -27.94 0)
 					(length 7.62)
 					(name "GND"
