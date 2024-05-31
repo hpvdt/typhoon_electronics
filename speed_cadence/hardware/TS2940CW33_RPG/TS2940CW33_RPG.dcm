@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP TS2940CW33_RPG
+D TAIWAN SEMICONDUCTOR - TS2940CW33 RPG - Fixed LDO Voltage Regulator, 4.5V to 26V, 0.6V drop, 3.3V/1A out, SOT-223-3
+K
+F https://ms.componentsearchengine.com/Datasheets/2/TS2940CW33RPG.pdf
+$ENDCMP
+#
+#End Doc Library
