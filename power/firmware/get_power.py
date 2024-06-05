@@ -3,7 +3,7 @@ import numpy as np
 from bleak import BleakClient
 import time
 
-window = 3      # get average cadence over x seconds
+window = 5      # get average cadence over x seconds
 queue = []      # holds x periods (times per revolution) 
 prev_time = 0   # previous "last crank event time" value
 prev_rev = 0    # previous "cumulative crank revolutions" value
@@ -39,6 +39,7 @@ last crank event time overflows every 65536/1024 = 64 seconds
 def get_cadence(new_rev, new_time):
     global window, queue, prev_time, prev_rev, no_rev
 
+    period = 1000
     if (prev_time != new_time): # if there's been a revolution
 
         # get time diff, fix overflow if needed
@@ -55,17 +56,15 @@ def get_cadence(new_rev, new_time):
         
         # get period (time per rev)
         period = time_diff/rev_diff
-
-        if (no_rev > window): # refresh queue if we haven't been pedalling for x sec
-            queue = []
         
         no_rev = 1 # reset no rev counter
         queue.append(period) # queue holds the past few periods
     else: # no rev
         no_rev += 1
     
-    if no_rev > window + 1: # if we haven't been pedalling in approx x seconds
+    if (no_rev > window + 1 or period < 5): # if we haven't been pedalling in approx x seconds or if period<0.005 s
         cadence = 0
+        queue = []
     else:
         if (len(queue) > window): # remove old period
             queue.pop(0)
@@ -73,7 +72,7 @@ def get_cadence(new_rev, new_time):
         cadence = 1/avg_period * 60 # revolutions per minute
         if (coast_drop):
             cadence = cadence/no_rev # gets artificial drop in cadence if we don't pedal 
-    
+
     prev_time = new_time
     prev_rev = new_rev
     return cadence
@@ -98,6 +97,7 @@ def notification_callback(sender, data): # gets data every ~1 second
     # print("cadence (rpm):", round(cadence,2))
 
     print("power (W):", power, " cadence (rpm):", round(cadence,2))
+    
 async def main():
     address = "0F190F5F-30CD-BF3C-7F90-EED38CBA0CDC" 
     power_uuid = "00002a63-0000-1000-8000-00805f9b34fb"
