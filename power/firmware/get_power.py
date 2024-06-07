@@ -3,11 +3,16 @@ import numpy as np
 from bleak import BleakClient
 import time
 
-power_uuid = "00002a63-0000-1000-8000-00805f9b34fb"
-queue = []
-prev_time = 0
-window = 3 # get average cadence over x seconds
-no_rev = 1
+window = 5      # get average cadence over x seconds
+queue = []      # holds x periods (times per revolution) 
+prev_time = 0   # previous "last crank event time" value
+prev_rev = 0    # previous "cumulative crank revolutions" value
+
+coast_drop = True # how cadence readings react if you don't pedal:
+                  # if True, cadence artificially decreases to 0 
+                  # if False, cadence holds its last value, and then drops to 0 after x seconds
+no_rev = 1        # counter for dropping cadence
+
 # start = 0
 # end = 0
 
@@ -31,51 +36,71 @@ from right to left, starting at byte 0:
 
 last crank event time overflows every 65536/1024 = 64 seconds
 '''
+def get_cadence(new_rev, new_time):
+    global window, queue, prev_time, prev_rev, no_rev
+
+    period = 1000
+    if (prev_time != new_time): # if there's been a revolution
+
+        # get time diff, fix overflow if needed
+        if (prev_time > new_time):
+            time_diff = (65535 - prev_time) + new_time + 1
+        else:
+            time_diff = new_time - prev_time
+        
+        # get rev diff, fix overflow if needed
+        if (prev_rev > new_rev):
+            rev_diff = (65535 - prev_rev) + new_rev + 1
+        else:
+            rev_diff = new_rev - prev_rev
+        
+        # get period (time per rev)
+        period = time_diff/rev_diff
+        
+        no_rev = 1 # reset no rev counter
+        queue.append(period) # queue holds the past few periods
+    else: # no rev
+        no_rev += 1
+    
+    if (no_rev > window + 1 or period < 5): # if we haven't been pedalling in approx x seconds or if period<0.005 s
+        cadence = 0
+        queue = []
+    else:
+        if (len(queue) > window): # remove old period
+            queue.pop(0)
+        avg_period = sum(queue) / len(queue) / 1024 # averaged seconds per revolution
+        cadence = 1/avg_period * 60 # revolutions per minute
+        if (coast_drop):
+            cadence = cadence/no_rev # gets artificial drop in cadence if we don't pedal 
+
+    prev_time = new_time
+    prev_rev = new_rev
+    return cadence
 
 def notification_callback(sender, data): # gets data every ~1 second
+    global window, queue, prev_time, no_rev
     # global start,end
     # start = end
     # end = time.time()
     # print(end - start)
-    global queue, prev_time, no_rev
 
     L = list(data) # "Cycling Power Measurement" characteristic
     #print(L)
     power = L[3] * 2**8 + L[2] # concatenating the bytes
     total_revs = L[5] * 2**8 + L[4]
     new_time = L[7] * 2**8 + L[6]
-    print("power (W):", power)
-    print("cumulative crank revolutions:", total_revs)
-    print("last crank event time (s):", new_time/1024)
+    cadence = get_cadence(total_revs, new_time)
     
-    if (prev_time != new_time): # yes rev
-        if (prev_time > new_time): # rev with overflow
-            diff = (65535 - prev_time) + new_time + 1
-        else:
-            diff = new_time - prev_time # rev w/o overflow
-        if (no_rev > window): # refresh queue if we haven't been pedalling
-            queue = []
-        no_rev = 1
-        queue.append(diff) # fill queue with the amounts of time each new revolution takes
-    else: # no rev
-        no_rev += 1
+    # print("power (W):", power)
+    # print("cumulative crank revolutions:", total_revs)
+    # print("last crank event time (s):", new_time/1024)
+    # print("cadence (rpm):", round(cadence,2))
+
+    print("power (W):", power, " cadence (rpm):", round(cadence,2))
     
-    # get cadence
-    if no_rev > window + 1: # if we haven't been pedalling in approx x seconds
-        cadence = 0
-    else:
-        if (len(queue) > window): # remove old period
-            queue.pop(0)
-        avg_rev_time = sum(queue) / len(queue) / 1024 # averaged seconds per revolution
-        cadence = 1/avg_rev_time * 60 # revolutions per minute
-        cadence = cadence/no_rev # gets artificial drop in cadence if we don't pedal 
-
-    #print(queue)
-    print("cadence (rpm):", round(cadence,2))
-    prev_time = new_time
-
 async def main():
     address = "0F190F5F-30CD-BF3C-7F90-EED38CBA0CDC" 
+    power_uuid = "00002a63-0000-1000-8000-00805f9b34fb"
 
     async with BleakClient(address) as client:
         # check if connection was successful

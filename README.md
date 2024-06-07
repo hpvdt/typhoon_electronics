@@ -1,4 +1,4 @@
-# Typhoon ELectronics
+# Typhoon Electronics
 
 The electronics system for Typhoon Streamliner
 
