@@ -5412,8 +5412,7 @@
 	)
 	(gr_poly
 		(pts
-			(xy 101.6 51.6) (xy 101.6 51.6) (xy 101.6 98) (xy 101.6 98) (xy 68.8 98) (xy 68.8 98) (xy 68.8 51.6)
-			(xy 68.8 51.6)
+			(xy 101.6 51.6) (xy 101.6 98) (xy 68.8 98) (xy 68.8 51.6)
 		)
 		(stroke
 			(width 0.05)
@@ -5433,6 +5432,54 @@
 				(thickness 0.08)
 			)
 			(justify bottom)
+		)
+	)
+	(gr_text "TX"
+		(at 70.713333 83.89 0)
+		(layer "F.SilkS")
+		(uuid "99b3973f-ad5a-446d-ad70-14dd2810222e")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+			(justify left bottom)
+		)
+	)
+	(gr_text "GND"
+		(at 69.38 77.77 0)
+		(layer "F.SilkS")
+		(uuid "a067a165-815c-407e-a6d1-42afb9875258")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+			(justify left bottom)
+		)
+	)
+	(gr_text "RX"
+		(at 70.475238 81.85 0)
+		(layer "F.SilkS")
+		(uuid "af63eeba-c52a-49d4-b934-8e15b7ff321d")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+			(justify left bottom)
+		)
+	)
+	(gr_text "+5V"
+		(at 69.38 79.81 0)
+		(layer "F.SilkS")
+		(uuid "bfcf26b6-1509-4247-af8c-7495f469fac0")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+			(justify left bottom)
 		)
 	)
 	(segment
