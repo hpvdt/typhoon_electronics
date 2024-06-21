@@ -4981,7 +4981,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SO-8_3.9x4.9mm_P1.27mm"
 			(at 198.12 83.82 0)
 			(effects
 				(font
