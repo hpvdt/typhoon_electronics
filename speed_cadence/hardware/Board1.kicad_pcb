@@ -6521,7 +6521,7 @@
 		(uuid "18ad6bc1-391c-4ceb-b636-b1d525e57fa8")
 	)
 	(gr_text "SPEED MEASUREMENT - TYPHOON\nEVELYN KOSZTA and EUN GU KANG"
-		(at 85 105.58 0)
+		(at 85.24 105.62 0)
 		(layer "F.SilkS")
 		(uuid "835bb5d9-7059-4664-aa40-ec57eed6567d")
 		(effects
